@@ -20,3 +20,9 @@ body {
   font-family: 'Archivo Variable', sans-serif;
   color: rgb(19, 30, 65);
 }
+
+.highlight {
+  background: linear-gradient(315deg,#1c7df1 50%,#46c6fd 100%,#64a2f9);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

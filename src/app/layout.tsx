@@ -4,8 +4,8 @@ import "./globals.css";
 import Head from "next/head";
 
 export const metadata: Metadata = {
-  title: "Motionly",
-  description: "Drafts discovery motion with a simply click",
+  title: "motionly - Draft discovery motions automagically",
+  description: "Draft discovery motions automagically",
 };
 
 export default function RootLayout({
