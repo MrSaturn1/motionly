@@ -9,9 +9,11 @@ import {
 const Navbar = () => {
   const { sessionId } = auth();
   return (
-    <nav className="flex justify-between">
-      <img src="/brand.svg" />
-      {!sessionId ? <SignInButton /> : <UserButton afterSignOutUrl="/" />}
+    <nav className="">
+      <div className="max-w-6xl mx-auto flex justify-between p-3">
+        <img src="/brand.svg" />
+        {!sessionId ? <SignInButton /> : <UserButton afterSignOutUrl="/" />}
+      </div>
     </nav>
   );
 };
