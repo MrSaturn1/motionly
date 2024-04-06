@@ -26,3 +26,7 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.cl-card.cl-card > div:last-child {
+  display: none;
+}

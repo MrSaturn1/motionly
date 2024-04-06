@@ -9,9 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.29.12",
     "@fontsource-variable/archivo": "^5.0.18",
-    "firebase": "^10.10.0",
-    "firebase-admin": "^12.0.0",
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18"

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="max-w-lg mx-auto py-12">
@@ -8,6 +10,14 @@ export default function Home() {
         for your litigation cases{" "}
         <span className="text-3xl">automagically</span>
       </p>
+      <div className="my-4 flex justify-center">
+        <Link
+          href="/app"
+          className="bg-[#1009f6] hover:bg-[#121212] transition-all ease-in font-bold text-white rounded-full py-3 px-5"
+        >
+          Start Now
+        </Link>
+      </div>
     </main>
   );
 }
