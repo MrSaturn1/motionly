@@ -31,13 +31,14 @@ export default async function analyzeLegalDocument(
 ): Promise<any[]> {
   const interrInfoFilePath = "public/data/interrogatories.txt";
   const legalRulesFilePath = "public/data/legalRules.txt";
-  const training = "public/data/training.txt";
+  const trainingFilePath = "public/data/training.txt";
   const results = [];
 
   // Read files asynchronously
-  const [interrInfo, legalRules] = await Promise.all([
+  const [interrInfo, legalRules, training] = await Promise.all([
     readFileContent(interrInfoFilePath),
     readFileContent(legalRulesFilePath),
+    readFileContent(trainingFilePath),
   ]);
 
   // Initialize Groq client
