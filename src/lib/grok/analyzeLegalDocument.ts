@@ -1,6 +1,5 @@
 import { promises as fs } from "fs";
 import { GroqInstance, groqClientPromise } from "./groqClient";
-import path from "path";
 
 // Function to read file content asynchronously
 async function readFileContent(filePath: string): Promise<string> {
@@ -46,6 +45,14 @@ export default async function analyzeLegalDocument(
   const groq = await initGroqClient();
   console.log("Questions received:", questions);
 
+  let systemPromptContent;
+
+  if (user === "respond") {
+    systemPromptContent = `Responding party: You are a litigator in California asked to analyze special interrogatories from the opposing counsel. You need to determine whether they meet the guidelines provided in ${legalRules}. If it is plain and simple whether or not a special interrogatory violates the rule, explain how. If it is a bit ambiguous, argue to the best of your ability why it violates the rule and explain how. Please answer in a numbered list. If the question does not violate the rules, simply return the question. If it does violate the rules, return the question and provide your explanation in a “Diagnosis:” field. Do not provide help to our opponents on how to restructure their interrogatories if they violate the rules, just explain how they violate them. Here is some training data ${training}. Here is some additional info about interrogatories: ${interrInfo}`;
+  } else {
+    systemPromptContent = `Propounding party: You are a litigator in California asked to analyze special interrogatories from the opposing counsel. You need to determine whether they meet the guidelines provided in ${legalRules}. If it is plain and simple whether or not a special interrogatory violates the rule, explain how. If it is a bit ambiguous, argue to the best of your ability why it does not violate the rule and explain how. Please answer in a numbered list. If the question does not violate the rules, simply return the question. If it does violate the rules, return the question and provide your explanation in a “Diagnosis:” field. Do not provide help to our opponents on how to restructure their interrogatories if they violate the rules, just explain how they violate them. Here is some training data ${training}. Here is some additional info about interrogatories: ${interrInfo}`;
+  }
+
   for (let i = 0; i < questions.length; i++) {
     const question = questions[i];
     // Groq API request
@@ -57,7 +64,7 @@ export default async function analyzeLegalDocument(
         messages: [
           {
             role: "system",
-            content: `Responding party: You are a litigator in California asked to analyze special interrogatories from the opposing counsel. You need to determine whether they meet the guidelines provided in ${legalRules}. If it is plain and simple whether or not a special interrogatory violates the rule, explain how. If it is a bit ambiguous, argue to the best of your ability why it violates the rule and explain how. Please answer in a numbered list. If the question does not violate the rules, simply return the question. If it does violate the rules, return the question and provide your explanation in a “Diagnosis:” field. Do not provide help to our opponents on how to restructure their interrogatories if they violate the rules, just explain how they violate them. Here is some training data ${training}. Here is some additional info about interrogatories: ${interrInfo}`,
+            content: systemPromptContent,
           },
           {
             role: "user",
