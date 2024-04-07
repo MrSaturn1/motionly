@@ -44,7 +44,7 @@ const MotionDrafter = ({ type = "respond" }: any) => {
       const data = await res.json();
 
       if (res.status === 200) {
-        setReviews(data);
+        setReviews(data?.questions ?? []);
       } else {
         console.error(data);
         toast.error(data?.message);

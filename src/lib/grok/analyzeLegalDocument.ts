@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import { GroqInstance, groqClientPromise } from "./groqClient";
+import path from "path";
 
 // Function to read file content asynchronously
 async function readFileContent(filePath: string): Promise<string> {
@@ -28,9 +29,9 @@ async function initGroqClient(): Promise<GroqInstance> {
 export default async function analyzeLegalDocument(
   questions: string[]
 ): Promise<any[]> {
-  const interrInfoFilePath = "public/texts/interrogatories.txt";
-  const legalRulesFilePath = "public/texts/legalRules.txt";
-  const training = "public/texts/training.txt";
+  const interrInfoFilePath = "public/data/interrogatories.txt";
+  const legalRulesFilePath = "public/data/legalRules.txt";
+  const training = "public/data/training.txt";
   const results = [];
 
   // Read files asynchronously

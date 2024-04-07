@@ -1,4 +1,6 @@
 import { data } from "@/lib/data";
+import analyzeLegalDocument from "@/lib/grok/analyzeLegalDocument";
+import questionFormat from "@/lib/grok/questionFormat";
 
 interface AnalyzeRequestBody {
   /** Input questions from end user */
@@ -28,8 +30,16 @@ export async function POST(request: Request) {
     }
 
     // TODO: Pass res.questions & res.type into LLM
+    const initialDoc = res.questions;
+    const questions = await questionFormat(initialDoc);
+    const analysisResults = await analyzeLegalDocument(questions);
 
-    return Response.json(data, { status: 200 });
+    return Response.json(
+      {
+        questions: analysisResults,
+      },
+      { status: 200 }
+    );
   } catch (err) {
     console.error(err);
 
