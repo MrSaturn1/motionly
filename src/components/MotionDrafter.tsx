@@ -140,9 +140,9 @@ const MotionDrafter = ({ type = "respond" }: any) => {
                 <Accordion.Trigger className="text-left flex items-start gap-2">
                   <div className="text-2xl py-3 px-1">
                     {item.passFail === "Pass" ? (
-                      <FaCheckCircle className="text-red-600" />
+                      <FaCheckCircle className="text-green-600" />
                     ) : (
-                      <FaTimesCircle className="text-green-600" />
+                      <FaTimesCircle className="text-red-600" />
                     )}
                   </div>
                   <div className="p-2">{item.question}</div>
