@@ -112,7 +112,12 @@ const MotionDrafter = ({ type = "respond" }: any) => {
         body: formData,
       });
       const data = await res.json();
+      if (res.status !== 200) {
+        toast.error("Failed to upload file");
+        return;
+      }
       setDiscoverRequests(data.data);
+      (fileInputRef.current.value as any) = null;
     } catch (err) {
       toast.error("Failed to upload file");
     } finally {
