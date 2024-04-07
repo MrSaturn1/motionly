@@ -132,6 +132,7 @@ const MotionDrafter = ({ type = "respond" }: any) => {
         <Accordion.Root type="multiple" className="transition-all ease-in">
           {reviews.map((item) => (
             <Accordion.Item
+              key={item.questionNumber}
               value={item.questionNumber}
               className=" border-b border-slate-100"
             >
