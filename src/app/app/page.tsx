@@ -10,8 +10,8 @@ export default function Home() {
       <img src="/welcome.jpg" className="w-[450px]" />
       <h1 className="text-4xl font-normal">Hey {name} 👋</h1>
       <p className="my-4 text-gray-400 w-[450px] text-center">
-        Let's start drafting some discovery motions. <br /> First, let us know
-        which{" "}
+        Let&apos;s start drafting some discovery motions. <br /> First, let us
+        know which{" "}
         <span className="font-medium text-gray-500">discovery request</span> do
         you plan to draft a motion for?
       </p>
