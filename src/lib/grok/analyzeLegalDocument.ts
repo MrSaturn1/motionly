@@ -61,6 +61,7 @@ export default async function analyzeLegalDocument(
       console.log(`Processing question ${i + 1}:`, question);
       const response = await groq.chat.completions.create({
         model: "mixtral-8x7b-32768",
+        temperature: 0,
         messages: [
           {
             role: "system",
@@ -79,6 +80,7 @@ export default async function analyzeLegalDocument(
       // Determine pass or fail based on analysis content
       const passFailCheck = await groq.chat.completions.create({
         model: "mixtral-8x7b-32768",
+        temperature: 0,
         messages: [
           {
             role: "system",
