@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "@fontsource-variable/archivo";
 import "./globals.css";
 import Head from "next/head";
-import { ClerkProvider, SignOutButton } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
-  title: "motionly - Draft discovery motions automagically",
-  description: "Draft discovery motions automagically",
+  title: "motionly - Discovery motions drafted automagically",
+  description: "Discovery motions drafted automagically",
 };
 
 export default function RootLayout({
