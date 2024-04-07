@@ -1,10 +1,17 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <main className="max-w-lg min-h-screen flex flex-col justify-center items-center mx-auto pb-32 px-3">
       <section className="my-8">
-        <img src="/brand.svg" className="mx-auto" />
+        <Image
+          src="/brand.svg"
+          className="mx-auto"
+          alt="motionly"
+          width="120"
+          height="32"
+        />
         <p className="font-normal text-2xl my-8 text-center">
           We draft{" "}
           <span className="font-bold text-4xl highlight">
