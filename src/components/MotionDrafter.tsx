@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Stepper from "./Stepper";
 import Spinner from "./Spinner";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
@@ -88,6 +88,40 @@ const MotionDrafter = ({ type = "respond" }: any) => {
     }
   };
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const handleClickUpload = () => {
+    if (!fileInputRef.current) return;
+    fileInputRef.current.click();
+    console.log("clicking");
+  };
+
+  const [loadingUpload, setLoadingUpload] = useState(false);
+
+  const handleFileChange = async () => {
+    if (!fileInputRef.current) return;
+    const files = fileInputRef.current.files;
+    if (!files || files?.length === 0) return;
+    const file = files[0];
+    console.log(file);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      setLoadingUpload(true);
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      setDiscoverRequests(data.data);
+    } catch (err) {
+      toast.error("Failed to upload file");
+    } finally {
+      setLoadingUpload(false);
+    }
+  };
+
   const renderDiscoveryRequestForm = () => {
     return (
       <>
@@ -97,13 +131,29 @@ const MotionDrafter = ({ type = "respond" }: any) => {
             ? `To help you file a motion, please copy and paste discovery requests that you've received from the opposing party.`
             : `To help you file a motion, please copy and paste discovery requests that you've received from the opposing party.`}
         </p>
-        <div className="my-8">
+        <input
+          ref={fileInputRef}
+          type="file"
+          name="file"
+          onChangeCapture={handleFileChange}
+          style={{ display: "none" }}
+        />
+        <button
+          className="btn-blue"
+          type="button"
+          onClick={handleClickUpload}
+          disabled={loadingUpload}
+        >
+          Upload file
+        </button>
+        <div className="my-2">
           <textarea
             className="w-full h-[500px] border border-gray-200 p-3 rounded"
             placeholder="Paste discovery requests here"
             onChange={handleChangeRequests}
             value={discoveryRequests}
             autoFocus
+            disabled={loadingUpload}
           />
           {formError && (
             <p className="text-red-500 text-sm">
@@ -116,7 +166,7 @@ const MotionDrafter = ({ type = "respond" }: any) => {
             <button
               className="btn-blue"
               onClick={handleSubmitRequests}
-              disabled={!discoveryRequests}
+              disabled={!discoveryRequests || loadingUpload}
             >
               Submit for review
             </button>
