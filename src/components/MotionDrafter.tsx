@@ -204,7 +204,7 @@ const MotionDrafter = ({ type = "respond" }: any) => {
     }
   };
   const renderDraft = () => {
-    if (loadingReview) {
+    if (loadingExport) {
       return (
         <>
           <h1 className="text-3xl">Generate Motion</h1>

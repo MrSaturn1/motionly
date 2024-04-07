@@ -30,7 +30,7 @@ async function initGroqClient(): Promise<GroqInstance> {
   }
 }
 
-async function generateMotionText(
+export async function generateMotionText(
   results: Array<any>,
   user: string
 ): Promise<string> {

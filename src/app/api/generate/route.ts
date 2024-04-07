@@ -1,4 +1,4 @@
-import { data, motionDraft } from "@/lib/data";
+import { generateMotionText } from "@/lib/grok/generateMotionText";
 
 interface GenerateRequestBody {
   /** Input questions from end user */
@@ -20,9 +20,9 @@ export async function POST(request: Request) {
 
   try {
     const res = (await request.json()) as GenerateRequestBody;
+    const motion = await generateMotionText(res.diagnosis, res.type);
 
-    // TODO: Pass data into LLM
-    return Response.json({ motion: motionDraft }, { status: 200 });
+    return Response.json({ motion }, { status: 200 });
   } catch (err) {
     console.error(err);
 
