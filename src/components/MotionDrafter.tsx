@@ -92,7 +92,6 @@ const MotionDrafter = ({ type = "respond" }: any) => {
   const handleClickUpload = () => {
     if (!fileInputRef.current) return;
     fileInputRef.current.click();
-    console.log("clicking");
   };
 
   const [loadingUpload, setLoadingUpload] = useState(false);
@@ -102,7 +101,6 @@ const MotionDrafter = ({ type = "respond" }: any) => {
     const files = fileInputRef.current.files;
     if (!files || files?.length === 0) return;
     const file = files[0];
-    console.log(file);
 
     const formData = new FormData();
     formData.append("file", file);
