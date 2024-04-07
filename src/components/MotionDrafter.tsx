@@ -32,11 +32,26 @@ const MotionDrafter = ({ type = "respond" }: any) => {
     setView("review");
     try {
       setLoadingReview(true);
-      const res = await fetch("/api/analyze", { method: "POST" });
+
+      const payload = {
+        questions: discoveryRequests,
+        type,
+      };
+      const res = await fetch("/api/analyze", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
       const data = await res.json();
-      setReviews(data);
+
+      if (res.status === 200) {
+        setReviews(data);
+      } else {
+        console.error(data);
+        toast.error(data?.message);
+      }
     } catch (err) {
       console.error(err);
+      toast.error("An error has occurred");
     } finally {
       setLoadingReview(false);
     }
@@ -47,11 +62,27 @@ const MotionDrafter = ({ type = "respond" }: any) => {
     setView("export");
     try {
       setLoadingExport(true);
-      const res = await fetch("/api/generate", { method: "POST" });
+
+      const payload = {
+        questions: discoveryRequests,
+        type,
+        diagnosis: reviews,
+      };
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
       const data = await res.json();
-      setDraft(data.motion);
+
+      if (res.status === 200) {
+        setDraft(data.motion);
+      } else {
+        console.error(data);
+        toast.error(data?.message);
+      }
     } catch (err) {
       console.error(err);
+      toast.error("An error has occurred");
     } finally {
       setLoadingExport(false);
     }
@@ -130,7 +161,7 @@ const MotionDrafter = ({ type = "respond" }: any) => {
         </p>
 
         <Accordion.Root type="multiple" className="transition-all ease-in">
-          {reviews.map((item) => (
+          {reviews?.map((item) => (
             <Accordion.Item
               key={item.questionNumber}
               value={item.questionNumber}
