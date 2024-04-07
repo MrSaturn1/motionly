@@ -27,7 +27,8 @@ async function initGroqClient(): Promise<GroqInstance> {
 }
 
 export default async function analyzeLegalDocument(
-  questions: string[]
+  questions: string[],
+  user: string
 ): Promise<any[]> {
   const interrInfoFilePath = "public/data/interrogatories.txt";
   const legalRulesFilePath = "public/data/legalRules.txt";
@@ -98,7 +99,6 @@ export default async function analyzeLegalDocument(
         analysis: analysis,
         passFail: passFail,
       });
-      console.log(`Response for question ${i + 1}:`, response);
     } catch (error) {
       console.error(
         "Error making API request to Groq for question ",
@@ -115,6 +115,5 @@ export default async function analyzeLegalDocument(
       });
     }
   }
-  console.log("results:", results);
   return results;
 }

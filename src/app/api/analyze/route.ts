@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     // TODO: Pass res.questions & res.type into LLM
     const initialDoc = res.questions;
     const questions = await questionFormat(initialDoc);
-    const analysisResults = await analyzeLegalDocument(questions);
+    const analysisResults = await analyzeLegalDocument(questions, res.type);
 
     return Response.json(
       {
