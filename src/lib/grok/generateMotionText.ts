@@ -2,12 +2,18 @@
 import { GroqInstance, groqClientPromise } from "./groqClient";
 
 function constructMotionPrompt(results: Array<any>, user: string): string {
-  const failedQuestions = results.filter(question => question.passFail === "Fail");
-  let prompt = "Generate legal analysis, intended to be copied and pasted into a motion document, based on the following interrogatory questions in violation of the rules:\n\n";
+  const failedQuestions = results.filter(
+    (question) => question.passFail === "Fail"
+  );
+  let prompt =
+    "Generate legal analysis, intended to be copied and pasted into a motion document, based on the following interrogatory questions in violation of the rules:\n\n";
   failedQuestions.forEach((item, index) => {
-    prompt += `Question ${index + 1}: ${item.question}\nAnalysis: ${item.analysis}\n\n`;
+    prompt += `Question ${index + 1}: ${item.question}\nAnalysis: ${
+      item.analysis
+    }\n\n`;
   });
-  prompt += "Provide a detailed explanation of the rule violations and suggest corrections.";
+  prompt +=
+    "Provide a detailed explanation of the rule violations and suggest corrections.";
   return prompt;
 }
 
@@ -24,19 +30,24 @@ async function initGroqClient(): Promise<GroqInstance> {
   }
 }
 
-async function generateMotionText(results: Array<any>, user: string): Promise<string> {
+async function generateMotionText(
+  results: Array<any>,
+  user: string
+): Promise<string> {
   const groq = await initGroqClient();
 
   // Construct the prompt for the motion generation
-  const prompt = constructMotionPrompt(results);
+  const prompt = constructMotionPrompt(results, user);
 
   // Send the prompt to the LLM
   const response = await groq.chat.completions.create({
     model: "mixtral-8x7b-32768", // Adjust the model as per your setup
-    messages: [{
-      role: "system",
-      content: prompt,
-    }],
+    messages: [
+      {
+        role: "system",
+        content: prompt,
+      },
+    ],
     max_tokens: 2048,
   });
 
