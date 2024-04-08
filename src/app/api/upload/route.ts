@@ -19,7 +19,14 @@ export async function POST(request: Request) {
       },
       { status: 200 }
     );
-  } catch (err) {}
+  } catch (err) {
+    return Response.json(
+      {
+        message: "An error occurred",
+      },
+      { status: 500 }
+    );
+  }
 }
 
 // TODO parse file
